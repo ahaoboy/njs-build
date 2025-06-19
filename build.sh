@@ -11,33 +11,32 @@ git clone https://github.com/nginx/njs.git njs --depth=1
 cd njs
 
 # njs-ng
-# git clone https://github.com/quickjs-ng/quickjs quickjs-ng
-# cd quickjs-ng
-# git checkout v0.9.0
-# CFLAGS="$CC_OPT -fPIC" LDFLAGS=$LD_OPT cmake -B build
-# cmake --build build --target njs -j $(nproc)
-#
-# ./configure \
-#           --with-quickjs \
-#           --cc-opt="$CC_OPT -Iquickjs-ng" \
-#           --ld-opt="$LD_OPT -Lquickjs-ng/build" \
-# || cat build/autoconf.err
-# $MAKE_UTILITY -j$(nproc)
-
-
-# njs
-git clone https://github.com/bellard/quickjs
-cd quickjs
-# CFLAGS=$CC_OPT LDFLAGS=$LD_OPT $MAKE_UTILITY -j$(nproc) libquickjs.a
-make libquickjs.a
-cd ..
+git clone https://github.com/quickjs-ng/quickjs quickjs-ng
+git checkout v0.9.0
+cd quickjs-ng
+cmake -B build
+cmake --build build --target njs
 
 ./configure \
           --with-quickjs \
-          --cc-opt="$CC_OPT -Iquickjs" \
-          --ld-opt="$LD_OPT -Lquickjs" \
+          --cc-opt="$CC_OPT -Iquickjs-ng" \
+          --ld-opt="$LD_OPT -Lquickjs-ng/build" \
 || cat build/autoconf.err
 make
+
+
+# njs
+# git clone https://github.com/bellard/quickjs
+# cd quickjs
+# make libquickjs.a
+# cd ..
+
+# ./configure \
+#           --with-quickjs \
+#           --cc-opt="$CC_OPT -Iquickjs" \
+#           --ld-opt="$LD_OPT -Lquickjs" \
+# || cat build/autoconf.err
+# make
 
 mkdir ../dist
 
