@@ -21,14 +21,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: x86_64-apple-darwin
-            os: macos-13
           - target: aarch64-apple-darwin
-            os: macos-14
+            os: macos-latest
           # - target: x86_64-pc-windows-gnu
           #   os: windows-latest
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-24.04
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     name: build-${{ matrix.target }}
     steps:
@@ -53,7 +51,7 @@ jobs:
       - name: build-${{ matrix.target }}
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          sudo apt install -y libpcre3-dev zlib1g-dev libssl-dev libxml2-dev libxslt-dev
+          sudo apt install -y libpcre2-dev zlib1g-dev libssl-dev libxml2-dev libxslt1-dev
 
       - name: build-${{ matrix.target }}
         if: matrix.os != 'windows-latest'
@@ -73,7 +71,7 @@ jobs:
           path: ./njs-${{ matrix.target }}.tar.gz
   release:
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Download All Artifacts
@@ -96,10 +94,8 @@ jobs:
     strategy:
       matrix:
         os: [
-            ubuntu-24.04,
-            # windows-latest,
-            macos-14,
-            macos-13,
+            ubuntu-latest,
+            macos-latest,
           ]
     runs-on: ${{ matrix.os }}
     steps:
