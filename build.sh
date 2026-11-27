@@ -41,6 +41,8 @@ make
 
 mkdir ../dist
 
+ldd ./build/njs
+
 cp ./build/njs ../dist
 cp ./build/libqjs* ../dist
 cp ./build/libnjs* ../dist
