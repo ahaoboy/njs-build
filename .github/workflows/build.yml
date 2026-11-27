@@ -87,6 +87,11 @@ jobs:
         with:
           artifacts: "njs/*.tar.gz"
           allowUpdates: true
+          tag: "nightly"
+          name: "nightly"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: main
+          replacesArtifacts: true
 
   post-test:
     needs: ["release"]
