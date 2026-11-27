@@ -41,8 +41,6 @@ make
 
 mkdir ../dist
 
-ldd ./build/njs
-
 cp ./build/njs ../dist
 cp ./build/libqjs* ../dist
 cp ./build/libnjs* ../dist
@@ -51,8 +49,10 @@ BIN="./build/njs"
 DIST="../dist"
 
 if [[ "$(uname -s)" == Darwin ]]; then
+    otool -L "$BIN"
     paths=$(otool -L "$BIN" | awk 'NR > 1 {print $1}')
 else
+    ldd "$BIN"
     paths=$(ldd "$BIN" | awk '/=> \// {print $3} /^[[:space:]]*\// {print $1}')
 fi
 
