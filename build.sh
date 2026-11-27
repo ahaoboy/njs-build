@@ -59,6 +59,10 @@ fi
 while IFS= read -r path; do
     case "$(basename "$path")" in
         libxml2*|libicuuc*|libicui18n*)
+            if [[ "$(uname -s)" == Darwin && "$path" == /usr/lib/* ]]; then
+                continue
+            fi
+            [[ -f "$path" ]] || continue
             cp -L "$path" "$DIST/"
             echo "Copied: $path"
             ;;
